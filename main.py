@@ -1,5 +1,6 @@
 from datetime import date
 from datetime import datetime
+import json
 
 expense_store = []
 
@@ -32,8 +33,9 @@ while True:
 
 view_expense()
 
-sort_by = input("sort category by: ").lower()
-'''def filter_by_category():
+
+def filter_by_category():
+    sort_by = input("sort category by: ").lower()
     found = False
     for items in expense_store:
         if(items['category'].lower() == sort_by):
@@ -42,24 +44,37 @@ sort_by = input("sort category by: ").lower()
     if not found:
         print("not found")  
 
-filter_by_category()'''
+filter_by_category()
 
 def total_by_category():
+    sort_by = input("sort category by: ").lower()
     total = 0
+    found = False
     for items in expense_store:
         if(items["category"].lower() == sort_by):
-            for item in expense_store:
-                total += item["amount"]
-    print(total)
+            total += items["amount"]
+            found = True
+    if not found:
+        print("this catrgory was not found")
+    else:
+        print(f"the total of the {sort_by} category: {total}")
+    
 
-total_by_category
+total_by_category()
 
-'''def total_spending():
+def total_spending():
     total = 0
     for items in expense_store:
         total += items["amount"]
     print(f"this is the total of all the expenditure: {total}")
 
 total_spending()
-'''
+
+def save_expenses():
+    with open("expenses.json", "w") as file:
+        json.dump(expense_store, file, indent=4)
+    print("Expenses saved successfully.")
+
+save_expenses()
+
 
